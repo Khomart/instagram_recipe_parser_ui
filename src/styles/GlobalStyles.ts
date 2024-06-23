@@ -93,6 +93,33 @@ const GlobalStyles = createGlobalStyle`
       width: 60%;
     }
   }
+
+  .login-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+  }
+
+  .login-header {
+    margin-bottom: 20px;
+  }
+
+  .login-button {
+    width: 300px;
+    padding: 10px;
+    font-size: 16px;
+    color: white;
+    background-color: blue;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
 export default GlobalStyles;

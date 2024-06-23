@@ -38,7 +38,7 @@ const LandingPage: React.FC = () => {
     const token = localStorage.getItem('google_token');
 
     try {
-      const response = await fetch('http://your-backend-url/api/parse', {
+      const response = await fetch('http://localhost:8080/parse', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
