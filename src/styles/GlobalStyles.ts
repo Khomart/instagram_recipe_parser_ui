@@ -78,6 +78,21 @@ const GlobalStyles = createGlobalStyle`
     color: red;
     margin-bottom: 20px;
   }
+
+  .result-box {
+    width: 90%;
+    height: 600px;
+    background-color: white;
+    color: black;
+    padding: 10px;
+    margin-top: 20px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    text-align: left;
+    @media (min-width: 768px) {
+      width: 60%;
+    }
+  }
 `;
 
 export default GlobalStyles;

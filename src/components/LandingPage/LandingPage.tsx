@@ -5,6 +5,7 @@ const LandingPage: React.FC = () => {
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const [result, setResult] = useState('');
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
@@ -49,11 +50,14 @@ const LandingPage: React.FC = () => {
       if (response.ok) {
         const data = await response.json();
         console.log('Response:', data);
+        setResult(data.data); // Display the data from the response
       } else {
         console.error('Error:', response.statusText);
+        setError('Failed to process URL.');
       }
     } catch (error) {
       console.error('Error:', error);
+      setError('An error occurred.');
     } finally {
       setIsLoading(false);
     }
@@ -77,6 +81,7 @@ const LandingPage: React.FC = () => {
       >
         {isLoading ? <div className="spinner"></div> : 'Send'}
       </button>
+      {result && <div className="result-box">{result}</div>}
     </div>
   );
 };
