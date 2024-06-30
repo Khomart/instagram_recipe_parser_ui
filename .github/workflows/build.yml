@@ -52,4 +52,4 @@ jobs:
         run: |
           IMAGE_TAG=$(echo $GITHUB_SHA | head -c 7)
           docker tag ${{ secrets.ECR_REPOSITORY_URI }}/$ECR_REPOSITORY:$IMAGE_TAG ${{ secrets.ECR_REPOSITORY_URI }}/$ECR_REPOSITORY:latest
-          docker push ${{ secrets.ECR_REPOSITORY_URI }}:latest
+          docker push ${{ secrets.ECR_REPOSITORY_URI }}/$ECR_REPOSITORY:latest
