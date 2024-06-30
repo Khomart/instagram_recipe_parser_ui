@@ -6,15 +6,16 @@ on:
   pull_request:
       branches: [ "*" ]
 
-
-permissions:
-  id-token: write
-  contents: read
-
-  
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write
+      contents: read
+
+    env:
+      ECR_REPOSITORY: instagram_recipe_parser_ui
 
     steps:
       - name: Checkout code
@@ -38,14 +39,17 @@ jobs:
         run: |
           aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${{ secrets.ECR_REPOSITORY_URI }}
 
-      - name: Build and push Docker image
+      - name: Build Docker image
         id: build-and-push
         run: |
           IMAGE_TAG=$(echo $GITHUB_SHA | head -c 7)
-          docker build -t ${{ secrets.ECR_REPOSITORY_URI }}:$IMAGE_TAG .
-          docker push ${{ secrets.ECR_REPOSITORY_URI }}:$IMAGE_TAG
-
+          docker build -t ${{ secrets.ECR_REPOSITORY_URI }}/$ECR_REPOSITORY:$IMAGE_TAG .
+      - name: Push Docker image to Amazon ECR
+        run: |
+          IMAGE_TAG=$(echo $GITHUB_SHA | head -c 7)
+          docker push ${{ secrets.ECR_REPOSITORY_URI }}/$ECR_REPOSITORY:$IMAGE_TAG
       - name: Tag latest image
         run: |
-          docker tag ${{ secrets.ECR_REPOSITORY_URI }}:$(echo $GITHUB_SHA | head -c 7) ${{ secrets.ECR_REPOSITORY_URI }}:latest
+          IMAGE_TAG=$(echo $GITHUB_SHA | head -c 7)
+          docker tag ${{ secrets.ECR_REPOSITORY_URI }}/$ECR_REPOSITORY:IMAGE_TAG ${{ secrets.ECR_REPOSITORY_URI }}/$ECR_REPOSITORY:latest
           docker push ${{ secrets.ECR_REPOSITORY_URI }}:latest
